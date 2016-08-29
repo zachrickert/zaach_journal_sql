@@ -1,0 +1,10 @@
+*.pyc
+*.egg-info
+.DS_Store
+*.py[cod]
+__pycache__
+.cache
+.coverage
+.tox
+.coveragerc
+
