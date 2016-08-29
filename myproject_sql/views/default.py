@@ -6,14 +6,30 @@ from sqlalchemy.exc import DBAPIError
 from ..models import MyModel
 
 
-@view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
-def my_view(request):
-    try:
-        query = request.dbsession.query(MyModel)
-        one = query.filter(MyModel.name == 'one').first()
-    except DBAPIError:
-        return Response(db_err_msg, content_type='text/plain', status=500)
-    return {'one': one, 'project': 'MyProject_sql'}
+# @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
+# def my_view(request):
+#     try:
+#         query = request.dbsession.query(MyModel)
+#         one = query.filter(MyModel.name == 'one').first()
+#     except DBAPIError:
+#         return Response(db_err_msg, content_type='text/plain', status=500)
+#     return {'one': one, 'project': 'MyProject_sql'}
+
+
+# # in views/default.py
+
+# @view_config(route_name="edit", renderer="../templates/edit-model.jinja2")
+# def edit_view(request):
+#     if request.method == "POST":
+#         new_name = request.POST["name"]
+#         new_val = request.POST["value"]
+#         new_model = MyModel(name=new_name, value=new_val)
+
+#         request.dbsession.add(new_model)
+
+#         return {"data": {"name": "We made a new model!"}}
+
+#     return {"data": {"name": "A New Form"}}
 
 
 db_err_msg = """\

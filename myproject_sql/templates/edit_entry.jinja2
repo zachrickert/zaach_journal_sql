@@ -1,0 +1,16 @@
+{% extends "layout.jinja2" %}
+{% block body %}
+
+
+<form>
+    Title:<br>
+    <input type="text" name="title" id="title" value="{{ title }}"><br>
+    Journal:<br>
+    <textarea rows="25" cols="100" name="journal" id = "journal">
+        {{ body }}
+    </textarea>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

@@ -23,6 +23,7 @@ tests_require = [
     'WebTest >= 1.3.1',  # py3 compat
     'pytest',  # includes virtualenv
     'pytest-cov',
+    'tox'
     ]
 
 setup(name='MyProject_sql',
@@ -50,6 +51,6 @@ setup(name='MyProject_sql',
       [paste.app_factory]
       main = myproject_sql:main
       [console_scripts]
-      initialize_MyProject_sql_db = myproject_sql.scripts.initializedb:main
+      init_db = myproject_sql.scripts.initializedb:main
       """,
       )
