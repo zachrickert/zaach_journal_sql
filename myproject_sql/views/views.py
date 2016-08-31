@@ -1,44 +1,63 @@
 from pyramid.view import view_config
+from pyramid.response import Response
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound
+from sqlalchemy.exc import DBAPIError
+from datetime import datetime
+
+from ..models import Entry
 import os
 
 HERE = os.path.dirname(__file__)
+TIME_FORMAT = '%Y-%m-%d %I:%M:%S'
 
-ENTRIES = [
-    {"title": "Testing Coverage", "creation_date": "Aug 22, 2016", "id": 12, "body": "I worked with Will a little bit about testing and I feel like I have a better undestanding of testing.  He clued me in on:\n\npy.test --cov=src --cov-report=term-missing\n\nThis will give you the coverage tests, but also show you which lines your code didn't hit."},
-    {"title": "Http Server Classes", "creation_date": "Aug 21, 2016", "id": 11, "body": "Today I put the response / request functions of the http server into calsses.\nI was really happy with the results and I think it was a useful exercise to do.\nMy next goal is to use the properties method in classes. \nAlso I learned today that is the server has a print line in it's implimentation it causes the whole system to hang.  It took my a long time to figure that out."},
-    {"title": "File Path Name", "creation_date": "Aug 20, 2016", "id": 10, "body": "os.path.isdir(target) - determines if the target is a directory.\nos.path.abspath(target) - gets the absolute path to the file.\nos.path.join() - joins two paths together.\nWill return an absolute path if one is an absolute path"},
-]
 
 @view_config(route_name='home', renderer='../templates/index.jinja2')
-def list_view(request):
+def my_view(request):
+    try:
+        query = request.dbsession.query(Entry)
+        list_of_entries = query.order_by(Entry.creation_date).all()
+    except DBAPIError:
+        return Response(db_err_msg, content_type='text/plain', status=500)
     return {'title': 'Home',
-            "entries": ENTRIES
-            }
+            'entries': list_of_entries}
 
 
-@view_config(route_name='create', renderer='../templates/new_entry.jinja2')
+@view_config(route_name='create', renderer='../templates/edit_entry.jinja2')
 def create(request):
-    return {'title': 'New Entry'}
+    if request.method == "POST":
+        new_title = request.POST["title"]
+        new_body = request.POST["body"]
+        new_date = datetime.now()
+        new_model = Entry(title=new_title, body=new_body, creation_date=new_date)
 
+        request.dbsession.add(new_model)
+        url = request.route_url('detail', id=entry.id)
+        return HTTPFound(location=url)
+        # return {'id': id, 'title': new_title, 'creation_date': new_date, 'body': new_body}
+    return {}
 
 @view_config(route_name='detail', renderer='../templates/single_entry.jinja2')
-def detail_view(request):
-    id = request.matchdict.get('id', None)
-    for entry in ENTRIES:
-        if entry['id'] == int(id):
-            return entry
-
-
 @view_config(route_name='edit', renderer='../templates/edit_entry.jinja2')
 def edit_view(request):
     id = request.matchdict.get('id', None)
-    for entry in ENTRIES:
-        if entry['id'] == int(id):
-            return entry
+    try:
+        query = request.dbsession.query(Entry)
+        entry = query.filter(Entry.id == id).first()
+    except DBAPIError:
+        return Response(db_err_msg, content_type='text/plain', status=500)
+    if entry is None:
+        raise HTTPNotFound
 
+    if request.method == "POST":
+        # import pdb; pdb.set_trace()
+        new_title = request.POST["title"]
+        new_body = request.POST["body"]
+        
+        entry.title = new_title
+        entry.body = new_body
 
-# def includeme(config):
-#     config.add_view(list_view, route_name='home')
-#     config.add_view(create, route_name='create')
-#     config.add_view(detail_view, route_name='detail')
-#     config.add_view(edit_view, route_name='edit')
+        url = request.route_url('detail', id=entry.id)
+        return HTTPFound(location=url)
+
+    return {'id': id, 'title': entry.title, 'creation_date': entry.creation_date, 'body': entry.body}
+

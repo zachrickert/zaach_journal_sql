@@ -3,7 +3,9 @@ from sqlalchemy import (
     Index,
     Integer,
     Text,
-    Date
+    Unicode,
+    UnicodeText,
+    DateTime
 )
 
 from .meta import Base
@@ -18,10 +20,10 @@ class MyModel(Base):
 class Entry(Base):
     __tablename__ = 'entries'
     id = Column(Integer, primary_key=True)
-    title = Column(Text)
-    body = Column(Text)
+    title = Column(Unicode)
+    body = Column(UnicodeText)
     value = Column(Integer)
-    creation_date = Column(Date)
+    creation_date = Column(DateTime)
 
 
-Index('my_index', MyModel.name, unique=True, mysql_length=255)
+# Index('my_index', Entry.title, unique=True, mysql_length=255)

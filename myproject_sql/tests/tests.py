@@ -4,7 +4,7 @@ import transaction
 from pyramid import testing
 
 from ..models import (
-    MyModel,
+    Entry,
     get_engine,
     get_session_factory,
     get_tm_session,
