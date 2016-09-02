@@ -4,7 +4,7 @@
 {% if entries %}
     {% for entry in entries %}
         <article>
-            <strong>{{ entry.creation_date }} - </strong>
+            <strong>{{ entry.creation_date.strftime('%Y-%m-%d %H:%M') }} - </strong>
             <a href="{{ request.route_url('detail', id=entry.id) }}">{{ entry.title }}</a></h2>
         </article>
     {% endfor %}

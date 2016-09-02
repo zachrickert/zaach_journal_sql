@@ -15,7 +15,7 @@ TIME_FORMAT = '%Y-%m-%d %I:%M:%S'
 def my_view(request):
     try:
         query = request.dbsession.query(Entry)
-        list_of_entries = query.order_by(Entry.creation_date).all()
+        list_of_entries = query.order_by(Entry.creation_date.desc()).all()
     except DBAPIError:
         return Response(db_err_msg, content_type='text/plain', status=500)
     return {'title': 'Home',
@@ -31,7 +31,8 @@ def create(request):
         new_model = Entry(title=new_title, body=new_body, creation_date=new_date)
 
         request.dbsession.add(new_model)
-        url = request.route_url('detail', id=entry.id)
+
+        url = request.route_url('home')
         return HTTPFound(location=url)
         # return {'id': id, 'title': new_title, 'creation_date': new_date, 'body': new_body}
     return {}
@@ -56,7 +57,8 @@ def edit_view(request):
         entry.title = new_title
         entry.body = new_body
 
-        url = request.route_url('detail', id=entry.id)
+        # url = request.route_url('detail', id=entry.id)
+        url = request.route_url('home')
         return HTTPFound(location=url)
 
     return {'id': id, 'title': entry.title, 'creation_date': entry.creation_date, 'body': entry.body}
