@@ -10,17 +10,12 @@ enum34==1.1.6
 flake8==3.0.4
 gevent==1.1.2
 greenlet==0.4.10
--e git+https://github.com/zachrickert/http-server@20b819671d497dd225a410fc8ddfaf4ac1cb5a69#egg=http_server
 ipython==5.0.0
 ipython-genutils==0.1.0
 Jinja2==2.8
--e git+https://github.com/zachrickert/learning_journal.git@01ee3f64294fdadd0bcae0fd935b4920aed8dae7#egg=learning_journal
--e git+https://github.com/zachrickert/mailroom@d5ee1293f37e27ddc2978ecedca942fcf32f4f67#egg=mailroom
 Mako==1.0.4
 MarkupSafe==0.23
 mccabe==0.5.2
--e git+https://github.com/zachrickert/zach_journal@f03e870e94bddfa353fb970aed1fd2048d4d4a94#egg=MyProject
--e git+https://github.com/zachrickert/zach_journal_sql.git@df5745a387f517ecef49aa4915ad4e43e5c3fa8d#egg=MyProject_sql
 PasteDeploy==1.5.2
 pathlib2==2.1.0
 pathtools==0.1.2
