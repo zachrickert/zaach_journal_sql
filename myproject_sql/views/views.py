@@ -13,13 +13,9 @@ TIME_FORMAT = '%Y-%m-%d %I:%M:%S'
 
 @view_config(route_name='home', renderer='../templates/index.jinja2')
 def my_view(request):
-    try:
-        query = request.dbsession.query(Entry)
-        list_of_entries = query.order_by(Entry.creation_date.desc()).all()
-    except DBAPIError:
-        return Response(db_err_msg, content_type='text/plain', status=500)
-    return {'title': 'Home',
-            'entries': list_of_entries}
+    query = request.dbsession.query(Entry)
+    list_of_entries = query.order_by(Entry.creation_date.desc()).all()
+    return {'title': 'Home', 'entries': list_of_entries}
 
 
 @view_config(route_name='create', renderer='../templates/edit_entry.jinja2')
@@ -41,11 +37,8 @@ def create(request):
 @view_config(route_name='edit', renderer='../templates/edit_entry.jinja2')
 def edit_view(request):
     id = request.matchdict.get('id', None)
-    try:
-        query = request.dbsession.query(Entry)
-        entry = query.filter(Entry.id == id).first()
-    except DBAPIError:
-        return Response(db_err_msg, content_type='text/plain', status=500)
+    query = request.dbsession.query(Entry)
+    entry = query.filter(Entry.id == id).first()
     if entry is None:
         raise HTTPNotFound
 
