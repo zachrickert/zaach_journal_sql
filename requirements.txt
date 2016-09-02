@@ -20,7 +20,7 @@ Mako==1.0.4
 MarkupSafe==0.23
 mccabe==0.5.2
 -e git+https://github.com/zachrickert/zach_journal@f03e870e94bddfa353fb970aed1fd2048d4d4a94#egg=MyProject
--e git+https://github.com/zachrickert/zach_journal_sql.git@43061173aae82f2a2cd399312526458165a064c2#egg=MyProject_sql
+-e git+https://github.com/zachrickert/zach_journal_sql.git@df5745a387f517ecef49aa4915ad4e43e5c3fa8d#egg=MyProject_sql
 PasteDeploy==1.5.2
 pathlib2==2.1.0
 pathtools==0.1.2
