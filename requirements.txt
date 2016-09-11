@@ -7,8 +7,6 @@ ipython-genutils==0.1.0
 Jinja2==2.8
 Mako==1.0.4
 MarkupSafe==0.23
--e git+https://github.com/zachrickert/zach_journal@f03e870e94bddfa353fb970aed1fd2048d4d4a94#egg=MyProject
--e git+https://github.com/zachrickert/zach_journal_sql.git@8dbada06820736babe0938e3749f8c2d79173ee1#egg=MyProject_sql
 PasteDeploy==1.5.2
 pexpect==4.2.1
 pickleshare==0.7.4
