@@ -68,3 +68,9 @@ div.blogpost {
   visibility: hidden;
 }
 
+
+#notfound {
+  font-size: larger;
+  font-weight: bolder;
+
+}

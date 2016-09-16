@@ -1,8 +1,15 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+import os
 import pytest
 import transaction
 
 from pyramid import testing
 from datetime import datetime
+
+from pyramid.httpexceptions import HTTPFound
+
 
 from ..models import (
     Entry,
@@ -31,6 +38,10 @@ def sqlengine(request):
     return engine
 
 
+@pytest.fixture(scope="session")
+def environ():
+    os.environ['DATABASE_URL'] = 'sqlite:////tmp/testme.sqlite'
+
 @pytest.fixture(scope="function")
 def new_session(sqlengine, request):
     session_factory = get_session_factory(sqlengine)
@@ -49,7 +60,7 @@ def populated_db(request, sqlengine):
     session = get_tm_session(session_factory, transaction.manager)
 
     with transaction.manager:
-        session.add(Entry(title="Day 15", body="This is a test entry, James is being awesome.", creation_date=datetime.utcnow()))
+        session.add(Entry(title="Day 15", body="This is a test entry.", creation_date=datetime.utcnow()))
 
     def teardown():
         with transaction.manager:
@@ -98,7 +109,7 @@ def test_create_view(dummy_request, new_session):
 # ----------Functional--------------------
 
 @pytest.fixture()
-def testapp(sqlengine):
+def testapp(sqlengine, environ):
     from myproject_sql import main
     app = main({}, **DB_SETTINGS)
     from webtest import TestApp
@@ -120,8 +131,19 @@ def test_layout_edit_entry(testapp, populated_db):
     assert b'This is a test entry' in response.body
 
 
-def test_layout_create_entry(testapp, populated_db):
-    response = testapp.get('/journal/new-entry', status=200)
-    assert b'Title:' in response.body
+def test_layout_create_entry_post(testapp, populated_db, dummy_request):
+    from ..views.views import create
 
+    dummy_request.method = "POST"
+    import pdb; pdb.set_trace()
+    dummy_request.POST = {'title': 'fake title', 'body': 'fake body'}
+    result = create(dummy_request)
+
+    assert isinstance(result, HTTPFound)
+
+
+
+def test_layout_not_found(testapp, populated_db):
+    response = testapp.get('/tacos', status=404)
+    assert b'Page Not Found' in response.body
 
