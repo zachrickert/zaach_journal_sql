@@ -89,7 +89,6 @@ def test_home_view(dummy_request, new_session):
     new_session.add(Entry(title='the title', body='the body', creation_date=datetime.utcnow()))
     new_session.flush()
     info = my_view(dummy_request)
-    # import pdb; pdb.set_trace()
     assert info['entries'][0].title == 'the title'
 
 
@@ -139,8 +138,8 @@ def test_layout_create_entry_post(testapp, populated_db, dummy_request):
     dummy_request.POST = {'title': 'fake title', 'body': 'fake body'}
     result = create(dummy_request)
 
-    assert isinstance(result, HTTPFound)
-
+    # assert isinstance(result, HTTPFound)
+    assert False
 
 
 def test_layout_not_found(testapp, populated_db):
