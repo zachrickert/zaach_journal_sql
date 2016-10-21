@@ -1,0 +1,23 @@
+{% extends "layout.jinja2" %}
+{% block body %}
+
+
+<div class="content">
+    {% if data %}
+    <h1>{{ data.name }}</h1>
+    {% endif %}
+    <form action="" method="POST">
+        <label for="title">Title: </label><br/>
+        <input type="text" name="title" value ="{{ title }}"/><br/>
+        Journal:<br>
+        <textarea rows="25" cols="100" name="body" id = "journal">
+            {{ body }}
+        </textarea>
+        <br>
+
+        <input type="submit" value="Submit"/>
+    </form>
+</div>
+
+
+{% endblock %}

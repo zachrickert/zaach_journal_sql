@@ -1,0 +1,15 @@
+{% extends "layout.jinja2" %}
+{% block body %}
+
+{% if entries %}
+    {% for entry in entries %}
+        <article>
+            <strong>{{ entry.creation_date.strftime('%Y-%m-%d %H:%M') }} - </strong>
+            <a href="{{ request.route_url('detail', id=entry.id) }}">{{ entry.title }}</a></h2>
+        </article>
+    {% endfor %}
+{% else %}
+    <p>This journal is empty</p>
+{% endif %}
+
+{% endblock %}

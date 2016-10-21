@@ -1,0 +1,76 @@
+* {
+  font-family: Arial;
+  /*border: 1px solid pink;*/
+}
+
+body {
+  background: #212F3C;
+  color: #16A085;
+}
+
+a {
+  color: #8E44AD;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+h2 {
+  text-align: center;
+}
+
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #2980B9;
+}
+
+#navbar li {
+    float: left;
+}
+
+
+#navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #1A5276;
+}
+
+
+.pageButton {
+  color: #424242;
+  font-size: larger;
+  border-radius: 20px;
+  display: inline-block;
+  margin-top: 1em;
+}
+
+
+div.blogpost {
+  height: 3em;
+  width: 100%;
+  vertical-align: middle;
+  font-size: larger;
+}
+
+
+#date {
+  visibility: hidden;
+}
+
+
+#notfound {
+  font-size: larger;
+  font-weight: bolder;
+
+}
